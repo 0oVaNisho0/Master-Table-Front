@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { TransactionContextProvider } from './contexts/TransactionContext';
+
+import Layout from './components/Layout';
+import Home from './pages/Home';
+import UserDetail from './pages/UserDetail';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <TransactionContextProvider>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="home" element={<Home />} />
+          <Route path="new" element={<UserDetail />} />
+          <Route path="user/:userId" element={<UserDetail />} />
+
+          <Route index element={<Navigate to="/home" />} />
+        </Route>
+
+        <Route path="*" element={<Navigate to="/home" />} />
+      </Routes>
+    </TransactionContextProvider>
   );
 }
 
